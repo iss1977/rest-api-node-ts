@@ -1,6 +1,6 @@
 import type { Request, Response} from 'express'
 import type { Express } from 'express';
-import { createUserSessionHandler, getUserSessionsHandler } from '../controller/session.controller';
+import { createUserSessionHandler, deleteSessionHandler, getUserSessionsHandler } from '../controller/session.controller';
 import { createUserHandler } from '../controller/user.controller';
 import requireUser from '../middleware/requireUser';
 import { sessionSchema } from '../schema/session.schema';
@@ -18,6 +18,8 @@ function routes(app: Express){
     app.post('/api/sessions', validateResource(sessionSchema),  createUserSessionHandler); // validateResource is a curried functions
 
     app.get('/api/sessions', requireUser, getUserSessionsHandler);
+
+    app.delete('/api/sessions', requireUser, deleteSessionHandler);
 
 }
 
