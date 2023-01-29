@@ -27,7 +27,7 @@ function routes(app: Express){
 
     app.put('/api/products/:productId', requireUser, validateResource(updateProductSchema), updateProductHandler);
 
-    app.get('/api/products/:productId', requireUser, validateResource(getProductSchema), getProductHandler);
+    app.get('/api/products/:productId', validateResource(getProductSchema), getProductHandler);
 
     app.delete('/api/products/:productId', requireUser, validateResource(deleteProductSchema), deleteProductHandler);
 
