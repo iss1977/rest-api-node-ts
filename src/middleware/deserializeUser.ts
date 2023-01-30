@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { get } from "lodash";
 import { reIssueAccessToken } from "../service/session.service";
 import { verifyJwt } from "../utils/jwt.utils";
+import { deserializeUserSchema } from './../schema/user.schema';
 
 export const deserializeUser = async (req:Request , res: Response, next: NextFunction) => {
 
@@ -12,8 +13,13 @@ export const deserializeUser = async (req:Request , res: Response, next: NextFun
 
     const { decoded, expired } = verifyJwt(accessToken)
 
-    if (decoded){
-        res.locals.user = decoded;
+    if (decoded){ // true if valid and not expired
+        const userShapeValidStatus = deserializeUserSchema.safeParse(decoded);
+        if (userShapeValidStatus.success){
+            res.locals.user = decoded;
+        } else {
+            return res.status(400).send({message:userShapeValidStatus.error})
+        }
         return next();
     }
 
@@ -30,5 +36,5 @@ export const deserializeUser = async (req:Request , res: Response, next: NextFun
         }
     }
 
-    return next(); 
+    return next(); // when no token at all.
 }
