@@ -1,4 +1,4 @@
-import { object, string, TypeOf } from 'zod';
+import { number, object, string, TypeOf } from 'zod';
 
 
 export const createUserSchema = object({
@@ -23,3 +23,10 @@ export const createUserSchema = object({
 })
 
 export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, 'body.passwordConfirm'> // password confirm 
+
+export const deserializeUserSchema = object({
+    _id: string({required_error: 'Id is required.'}),
+    email: string({required_error: 'Email Address required'}).email({ message: "Invalid email address" }),
+    name: string({required_error: 'Name is required'}),
+    session: string({}),
+});
