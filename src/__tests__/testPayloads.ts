@@ -8,6 +8,8 @@ import { getUserSessionsHandler } from "../controller/session.controller";
 const userId = new mongoose.Types.ObjectId().toString();
 const session = new mongoose.Types.ObjectId().toString();
 
+// product tests payloads
+
 export const productPayload =  {
     user: userId,
     title: 'Product title',
@@ -21,4 +23,23 @@ export const userPayload =  {
     email: 'testuser@testdomain.com',
     name: 'Test User',
     session
+}
+
+// user tests payloads
+export const userInput = {
+    email: 'test@example.com',
+    name: 'Test user',
+    password: 'Password123',
+    passwordConfirm: 'Password123'
+};
+
+export const createUserServiceMockReturnData = {
+    email: "test@example.com",
+    name: "Test user",
+}
+
+export const sessionPayload = {
+    _id: session,
+    user: userId,
+    valid: true
 }
